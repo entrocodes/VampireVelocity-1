@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://8hsffmbfqvn"]
+
+[ext_resource type="Script" path="res://human/human.gd" id="1_8wwf0"]
+[ext_resource type="Texture2D" uid="uid://cqhx2qxlfcsbw" path="res://sprites/waterguy.png" id="1_dg1ir"]
+[ext_resource type="Texture2D" uid="uid://b8hj8ui36nip8" path="res://sprites/drained_guy.png" id="2_e0x2q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d0pfp"]
+atlas = ExtResource("1_dg1ir")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k4nsu"]
+atlas = ExtResource("2_e0x2q")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6o3c7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d0pfp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k4nsu")
+}],
+"loop": true,
+"name": &"drained",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vbxih"]
+size = Vector2(60, 131)
+
+[node name="Human" type="StaticBody2D" groups=["human"]]
+collision_layer = 2
+script = ExtResource("1_8wwf0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6o3c7")
+animation = &"drained"
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 1.5)
+shape = SubResource("RectangleShape2D_vbxih")

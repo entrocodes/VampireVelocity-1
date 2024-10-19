@@ -1,0 +1,75 @@
+[gd_scene load_steps=10 format=3 uid="uid://cvthwk0mdtquy"]
+
+[ext_resource type="Script" path="res://vampire/vampire.gd" id="1_l7my6"]
+[ext_resource type="Texture2D" uid="uid://dykcos1e3bbd" path="res://sprites/running_vampire.png" id="2_x64h4"]
+[ext_resource type="Script" path="res://vampire/label.gd" id="3_4i02r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_345x0"]
+size = Vector2(69, 104)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1j2a"]
+atlas = ExtResource("2_x64h4")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qt42d"]
+atlas = ExtResource("2_x64h4")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jmjrt"]
+atlas = ExtResource("2_x64h4")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_35s31"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x1j2a")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qt42d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jmjrt")
+}],
+"loop": true,
+"name": &"running",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gyd71"]
+size = Vector2(68, 104)
+
+[node name="Vampire" type="CharacterBody2D"]
+script = ExtResource("1_l7my6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-6.5, 5)
+shape = SubResource("RectangleShape2D_345x0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_35s31")
+animation = &"running"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Label" type="Label" parent="."]
+offset_left = -16.0
+offset_top = -133.0
+offset_right = 24.0
+offset_bottom = -110.0
+script = ExtResource("3_4i02r")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-7, 5)
+shape = SubResource("RectangleShape2D_gyd71")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
